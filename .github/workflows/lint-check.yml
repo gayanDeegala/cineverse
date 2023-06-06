@@ -1,0 +1,33 @@
+name: Lint and Format Check Workflow
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run lint and format check
+        run: yarn lint-and-format
+
+      - name: Check lint and format results
+        run: |
+          if [ ${{ job.status }} == 'failure' ]; then
+            echo "Lint and format check failed. Please address the issues before resubmitting the pull request."
+            exit 1
+          fi
