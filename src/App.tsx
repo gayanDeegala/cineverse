@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ConfigProvider, theme, Button } from 'antd';
-import { styled } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
+import { ConfigProvider, theme } from 'antd';
+import { Layout } from './Layout';
 
 function App() {
   const { defaultAlgorithm, darkAlgorithm } = theme;
@@ -11,24 +12,23 @@ function App() {
   }, []);
 
   return (
-    <Background>
-      <ConfigProvider
-        theme={{
-          algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
-          token: {
-            colorPrimary: '#B30000',
-          },
-        }}
-      >
-        <Button type='primary'>Change Theme to {isDarkMode ? 'Light' : 'Dark'}</Button>
-      </ConfigProvider>
-    </Background>
+    <ConfigProvider
+      theme={{
+        algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
+        token: {
+          colorPrimary: '#B30000',
+        },
+      }}
+    >
+      <div className='app'>
+        <div className='container'>
+          <BrowserRouter>
+            <Layout />
+          </BrowserRouter>
+        </div>
+      </div>
+    </ConfigProvider>
   );
 }
 
 export default App;
-
-const Background = styled.div`
-  background-color: rgba(0, 0, 0, 0.88);
-  min-height: 100vh;
-`;
