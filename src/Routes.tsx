@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
+import { Home } from './pages/Home';
 
 export const AppRoutes = () => (
   <Routes>
-    <Route path='/' element={<HomePage />} />
+    <Route path='/' element={<Home />} />
     <Route path='/buy-tickets' element={<BuyTicketsPage />} />
   </Routes>
 );
-const HomePage = () => <h1>Home</h1>;
 const BuyTicketsPage = () => <h1>Buy Tickets</h1>;
