@@ -60,7 +60,7 @@ const Left = styled.div``;
 
 const ImageContainer = styled.div`
   height: 500px;
-  margin-top: 200px;
+  margin-top: 150px;
 `;
 
 const Right = styled.div``;
@@ -71,7 +71,7 @@ const MovieImage = styled.img`
 `;
 
 const MovieDescription = styled.div`
-  margin: 450px 0 0 20px;
+  margin: 400px 0 0 20px;
 `;
 
 const GenresContainer = styled.div`
