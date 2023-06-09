@@ -7,6 +7,7 @@ import {
   getAvailableTheaters,
   getAvailableShowTimes,
 } from './utils/getAvailableOptions';
+import { Link } from 'react-router-dom';
 
 const { Title } = Typography;
 
@@ -15,6 +16,14 @@ export const BuyTickets = () => {
   const [selectedMovie, setSelectedMovie] = useState<MovieTitle | undefined>();
   const [selectedTheatre, setSelectedTheatre] = useState<Theatre | undefined>();
   const [selectedShowTime, setSelectedShowTime] = useState<ShowTime | undefined>();
+
+  const queryParams = new URLSearchParams();
+  if (selectedDate) queryParams.append('date', selectedDate.toString());
+  if (selectedMovie) queryParams.append('movie', selectedMovie.toString());
+  if (selectedTheatre) queryParams.append('theatre', selectedTheatre.toString());
+  if (selectedShowTime) queryParams.append('showtime', selectedShowTime.toString());
+
+  const queryString = queryParams.toString();
 
   const handleSelectDate = (value: Date) => {
     setSelectedDate(value);
@@ -113,14 +122,16 @@ export const BuyTickets = () => {
             </Options>
           </>
         )}
-        <Button
-          type='primary'
-          size='large'
-          disabled={!(selectedDate && selectedMovie && selectedTheatre && selectedShowTime)}
-          style={{ margin: '15px 0 0 50px' }}
-        >
-          Pick a Seat
-        </Button>
+        <Link to={`/pick-seats?${queryString}`}>
+          <Button
+            type='primary'
+            size='large'
+            disabled={!(selectedDate && selectedMovie && selectedTheatre && selectedShowTime)}
+            style={{ margin: '15px 0 0 50px' }}
+          >
+            Pick a Seat
+          </Button>
+        </Link>
       </Body>
     </>
   );
