@@ -8,6 +8,7 @@ import {
   getAvailableShowTimes,
 } from './utils/getAvailableOptions';
 import { Link } from 'react-router-dom';
+import { useSearchEvent } from '../hooks/useSearchEvent';
 
 const { Title } = Typography;
 
@@ -17,11 +18,12 @@ export const BuyTickets = () => {
   const [selectedTheatre, setSelectedTheatre] = useState<Theatre | undefined>();
   const [selectedShowTime, setSelectedShowTime] = useState<ShowTime | undefined>();
 
+  const { data: { id } = {} } = useSearchEvent(selectedDate, selectedShowTime, selectedTheatre);
+  console.log('asd', id);
+
   const queryParams = new URLSearchParams();
-  if (selectedDate) queryParams.append('date', selectedDate.toString());
-  if (selectedMovie) queryParams.append('movie', selectedMovie.toString());
+  if (selectedDate) queryParams.append('eventId', id);
   if (selectedTheatre) queryParams.append('theatre', selectedTheatre.toString());
-  if (selectedShowTime) queryParams.append('showtime', selectedShowTime.toString());
 
   const queryString = queryParams.toString();
 

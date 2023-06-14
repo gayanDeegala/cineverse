@@ -18,10 +18,10 @@ import {
   TheatreWrapper,
 } from './Theatre';
 
-export const Theatre1 = () => {
+export const Theatre1 = ({ bookedSeats = [] }: { bookedSeats: string[] }) => {
   const [countInputs, setCountInputs] = useState(Array(12).fill(0));
-  const bookedSeats = ['A9', 'A10', 'A8', 'C10', 'E7', 'F8', 'L2', 'L9'];
-  const seatingPlan = ['A1', 'C9', 'C10', 'C8', 'G17', 'G20', 'J5'];
+  // const bookedSeats = ['A9', 'A10', 'A8', 'C10', 'E7', 'F8', 'L2', 'L9'];
+  const seatingPlan: string[] = [];
 
   const handleCountInputChange = (index: number, value: ValueType | null) => {
     const updatedInputs = [...countInputs];
