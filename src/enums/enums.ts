@@ -27,3 +27,9 @@ export enum MovieTitle {
   FastX = 'Fast X',
   TheLittleMermaid = 'The Little Mermaid',
 }
+
+export enum Status {
+  available = 'Available',
+  booked = 'Booked',
+  selected = 'Selected',
+}
