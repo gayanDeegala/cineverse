@@ -2,6 +2,7 @@ import { ValueType } from '@rc-component/mini-decimal';
 import { Button, Row } from 'antd';
 import { useState } from 'react';
 import { Status } from '../enums/enums';
+import { useGenerateSeatingPlan } from '../hooks/useGenerateSeatingPlan';
 import { Theatre1Layout } from './layouts';
 import {
   BlueSeat,
@@ -18,10 +19,22 @@ import {
   TheatreWrapper,
 } from './Theatre';
 
-export const Theatre1 = ({ bookedSeats = [] }: { bookedSeats: string[] }) => {
-  const [countInputs, setCountInputs] = useState(Array(12).fill(0));
-  // const bookedSeats = ['A9', 'A10', 'A8', 'C10', 'E7', 'F8', 'L2', 'L9'];
-  const seatingPlan: string[] = [];
+const seatLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M'];
+
+export const Theatre1 = ({
+  eventId,
+  bookedSeats = [],
+}: {
+  eventId: string;
+  bookedSeats: string[];
+}) => {
+  const [countInputs, setCountInputs] = useState<(ValueType | null)[]>(Array(12).fill(0));
+
+  const { data: { seating_plan: seatingPlan = [] } = {} } = useGenerateSeatingPlan(
+    eventId,
+    countInputs,
+    seatLabels,
+  );
 
   const handleCountInputChange = (index: number, value: ValueType | null) => {
     const updatedInputs = [...countInputs];
@@ -52,6 +65,7 @@ export const Theatre1 = ({ bookedSeats = [] }: { bookedSeats: string[] }) => {
               key={index}
               value={input}
               onChange={(value) => handleCountInputChange(index, value)}
+              min={0}
             />
           ))}
         </OptionPanel>
@@ -117,7 +131,6 @@ export const Theatre1 = ({ bookedSeats = [] }: { bookedSeats: string[] }) => {
         </SeatLayout>
       </TheatreWrapper>
       <Controls>
-        <Button style={{ marginTop: '10px' }}>Generate a Seating Plan</Button>
         <Button type='primary' style={{ marginTop: '10px' }}>
           Accept the Seating Plan
         </Button>
