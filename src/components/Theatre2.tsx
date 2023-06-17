@@ -1,6 +1,7 @@
 import { ValueType } from '@rc-component/mini-decimal';
 import { Button, Row } from 'antd';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Status } from '../enums/enums';
 import { useGenerateSeatingPlan } from '../hooks/useGenerateSeatingPlan';
 import { Theatre2Layout } from './layouts';
@@ -56,6 +57,12 @@ export const Theatre2 = ({
   const orangeSeats = Theatre2Layout.orangeSeats;
   const blueSeats = Theatre2Layout.blueSeats;
   const greenSeats = Theatre2Layout.greenSeats;
+
+  const queryParams = new URLSearchParams();
+  if (eventId) queryParams.append('eventId', eventId);
+  if (seatingPlan) queryParams.append('eventId', seatingPlan.toString());
+
+  const queryString = queryParams.toString();
 
   const radius = 100;
   const angleStep = Math.PI / 20;
@@ -159,9 +166,11 @@ export const Theatre2 = ({
         </SeatLayoutWrapper>
       </TheatreWrapper>
       <Controls>
-        <Button type='primary' style={{ marginTop: '10px' }}>
-          Accept the Seating Plan
-        </Button>
+        <Link to={`/checkout?${queryString}`}>
+          <Button type='primary' style={{ marginTop: '30px' }}>
+            Accept the Seating Plan
+          </Button>
+        </Link>
       </Controls>
     </PageWrapper>
   );

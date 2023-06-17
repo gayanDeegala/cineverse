@@ -1,6 +1,7 @@
 import { ValueType } from '@rc-component/mini-decimal';
 import { Button, Row } from 'antd';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Status } from '../enums/enums';
 import { useGenerateSeatingPlan } from '../hooks/useGenerateSeatingPlan';
 import { Theatre1Layout } from './layouts';
@@ -55,6 +56,12 @@ export const Theatre1 = ({
   const orangeSeats = Theatre1Layout.orangeSeats;
   const blueSeats = Theatre1Layout.blueSeats;
   const greenSeats = Theatre1Layout.greenSeats;
+
+  const queryParams = new URLSearchParams();
+  if (eventId) queryParams.append('eventId', eventId);
+  if (seatingPlan) queryParams.append('eventId', seatingPlan.toString());
+
+  const queryString = queryParams.toString();
 
   return (
     <PageWrapper>
@@ -131,9 +138,11 @@ export const Theatre1 = ({
         </SeatLayout>
       </TheatreWrapper>
       <Controls>
-        <Button type='primary' style={{ marginTop: '10px' }}>
-          Accept the Seating Plan
-        </Button>
+        <Link to={`/checkout?${queryString}`}>
+          <Button type='primary' style={{ marginTop: '10px' }}>
+            Accept the Seating Plan
+          </Button>
+        </Link>
       </Controls>
     </PageWrapper>
   );

@@ -19,10 +19,9 @@ export const BuyTickets = () => {
   const [selectedShowTime, setSelectedShowTime] = useState<ShowTime | undefined>();
 
   const { data: { id } = {} } = useSearchEvent(selectedDate, selectedShowTime, selectedTheatre);
-  console.log('asd', id);
 
   const queryParams = new URLSearchParams();
-  if (selectedDate) queryParams.append('eventId', id);
+  if (id) queryParams.append('eventId', id);
   if (selectedTheatre) queryParams.append('theatre', selectedTheatre.toString());
 
   const queryString = queryParams.toString();
