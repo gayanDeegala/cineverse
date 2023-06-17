@@ -17,6 +17,7 @@ import {
   OptionPanel,
   PageWrapper,
   TheatreWrapper,
+  SeatLayoutWrapper,
 } from './Theatre';
 
 const seatLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M'];
@@ -28,7 +29,7 @@ export const Theatre2 = ({
   eventId: string;
   bookedSeats: string[];
 }) => {
-  const [countInputs, setCountInputs] = useState<(ValueType | null)[]>(Array(12).fill(0));
+  const [countInputs, setCountInputs] = useState<(ValueType | null)[]>(Array(8).fill(0));
 
   const { data: { seating_plan: seatingPlan = [] } = {} } = useGenerateSeatingPlan(
     eventId,
@@ -56,6 +57,15 @@ export const Theatre2 = ({
   const blueSeats = Theatre2Layout.blueSeats;
   const greenSeats = Theatre2Layout.greenSeats;
 
+  const radius = 100;
+  const angleStep = Math.PI / 20;
+
+  const calculateSeatPosition = (seatIndex: number) => {
+    const angle = angleStep * seatIndex;
+    const y = Math.sin(angle) * radius - 50;
+    return { y };
+  };
+
   return (
     <PageWrapper>
       <TheatreWrapper>
@@ -66,69 +76,87 @@ export const Theatre2 = ({
               value={input}
               onChange={(value) => handleCountInputChange(index, value)}
               min={0}
+              style={{ transform: 'translateY(-90px)' }}
             />
           ))}
         </OptionPanel>
-        <SeatLayout>
-          <Screen>Screen</Screen>
-          {orangeSeats.map((row: string[]) => {
-            return (
-              <Row key={row[0]}>
-                {row.map((seat) => {
-                  if (seat === 'half') {
-                    return <EmptyHalfSeat key={seat} />;
-                  }
-                  if (seat === 'empty') {
-                    return <EmptySeat key={seat} />;
-                  }
-                  return (
-                    <OrangeSeat status={getStatus(seat)} key={seat}>
-                      {seat}
-                    </OrangeSeat>
-                  );
-                })}
-              </Row>
-            );
-          })}
-          {blueSeats.map((row: string[]) => {
-            return (
-              <Row key={row[0]}>
-                {row.map((seat) => {
-                  if (seat === 'half') {
-                    return <EmptyHalfSeat key={seat} />;
-                  }
-                  if (seat === 'empty') {
-                    return <EmptySeat key={seat} />;
-                  }
-                  return (
-                    <BlueSeat status={getStatus(seat)} key={seat}>
-                      {seat}
-                    </BlueSeat>
-                  );
-                })}
-              </Row>
-            );
-          })}
-          {greenSeats.map((row: string[]) => {
-            return (
-              <Row key={row[0]}>
-                {row.map((seat) => {
-                  if (seat === 'half') {
-                    return <EmptyHalfSeat key={seat} />;
-                  }
-                  if (seat === 'empty') {
-                    return <EmptySeat key={seat} />;
-                  }
-                  return (
-                    <GreenSeat status={getStatus(seat)} key={seat}>
-                      {seat}
-                    </GreenSeat>
-                  );
-                })}
-              </Row>
-            );
-          })}
-        </SeatLayout>
+        <SeatLayoutWrapper>
+          <SeatLayout style={{ paddingBottom: '80px', gap: '15px' }}>
+            <Screen>Screen</Screen>
+            {orangeSeats.map((row: string[]) => {
+              return (
+                <Row key={row[0]}>
+                  {row.map((seat: string, seatIndex: number) => {
+                    const { y } = calculateSeatPosition(seatIndex);
+                    if (seat === 'half') {
+                      return <EmptyHalfSeat key={seat} />;
+                    }
+                    if (seat === 'empty') {
+                      return <EmptySeat key={seat} />;
+                    }
+                    return (
+                      <OrangeSeat
+                        status={getStatus(seat)}
+                        key={seat}
+                        style={{ transform: `translateY(${y}px)` }}
+                      >
+                        {seat}
+                      </OrangeSeat>
+                    );
+                  })}
+                </Row>
+              );
+            })}
+            {blueSeats.map((row: string[]) => {
+              return (
+                <Row key={row[0]}>
+                  {row.map((seat: string, seatIndex: number) => {
+                    const { y } = calculateSeatPosition(seatIndex);
+                    if (seat === 'half') {
+                      return <EmptyHalfSeat key={seat} />;
+                    }
+                    if (seat === 'empty') {
+                      return <EmptySeat key={seat} />;
+                    }
+                    return (
+                      <BlueSeat
+                        status={getStatus(seat)}
+                        key={seat}
+                        style={{ transform: `translateY(${y}px)` }}
+                      >
+                        {seat}
+                      </BlueSeat>
+                    );
+                  })}
+                </Row>
+              );
+            })}
+            {greenSeats.map((row: string[]) => {
+              return (
+                <Row key={row[0]}>
+                  {row.map((seat: string, seatIndex: number) => {
+                    const { y } = calculateSeatPosition(seatIndex);
+                    if (seat === 'half') {
+                      return <EmptyHalfSeat key={seat} />;
+                    }
+                    if (seat === 'empty') {
+                      return <EmptySeat key={seat} />;
+                    }
+                    return (
+                      <GreenSeat
+                        status={getStatus(seat)}
+                        key={seat}
+                        style={{ transform: `translateY(${y}px)` }}
+                      >
+                        {seat}
+                      </GreenSeat>
+                    );
+                  })}
+                </Row>
+              );
+            })}
+          </SeatLayout>
+        </SeatLayoutWrapper>
       </TheatreWrapper>
       <Controls>
         <Button type='primary' style={{ marginTop: '10px' }}>

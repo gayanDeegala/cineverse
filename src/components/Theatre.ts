@@ -33,10 +33,19 @@ export const CountInput = styled(InputNumber)`
 `;
 
 export const SeatLayout = styled.div`
+  position: relative; /* Ensure the wrapper is positioned relative to this element */
   display: grid;
   gap: 10px;
   background: black;
   padding: 10px;
+`;
+
+export const SeatLayoutWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px; /* Adjust the height as per your preference */
 `;
 
 export const Screen = styled.div`
@@ -63,7 +72,7 @@ export const EmptySeat = styled(Tag)`
   font-size: 10px;
   padding: 5px 10px;
   background: none;
-  border: none;
+  border: none;changeing
 `;
 
 export const EmptyHalfSeat = styled(EmptySeat)`
