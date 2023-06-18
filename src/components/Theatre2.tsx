@@ -60,7 +60,7 @@ export const Theatre2 = ({
 
   const queryParams = new URLSearchParams();
   if (eventId) queryParams.append('eventId', eventId);
-  if (seatingPlan) queryParams.append('eventId', seatingPlan.toString());
+  if (seatingPlan) queryParams.append('seatingPlan', seatingPlan.toString());
 
   const queryString = queryParams.toString();
 

@@ -1,7 +1,7 @@
 import { Button, Carousel, Tag, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { movieFixtures } from '../fixches/movieFixtures';
+import { movieFixtures } from '../fixtures/movieFixtures';
 import { CAROUSEL_ITEM_HEIGHT } from './const';
 
 const { Title, Paragraph } = Typography;
